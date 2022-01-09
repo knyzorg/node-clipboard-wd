@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "puppeteer": "^13.0.1"
+  },
+  "name": "node-clipboard-wd",
+  "version": "0.1.0",
+  "description": "Experimental WebDriver-based clipboard access",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knyzorg/node-clipboard-wd.git"
+  },
+  "keywords": [
+    "clipboard"
+  ],
+  "author": "Slava Knyazev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/knyzorg/node-clipboard-wd/issues"
+  },
+  "homepage": "https://github.com/knyzorg/node-clipboard-wd#readme",
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+}
