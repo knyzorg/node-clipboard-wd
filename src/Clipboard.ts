@@ -1,6 +1,14 @@
 import * as puppeteer from "puppeteer";
 
-class Clipboard {
+interface Paster {
+  getClipboardTypes(): Promise<string[]>;
+  getClipboardRichText(): Promise<string>;
+  getClipboardPlainText(): Promise<string>;
+  getClipboardFile(): Promise<number[]>;
+  getClipboardFormat(format: string): Promise<number[]>;
+}
+
+class WebDriverPaster implements Paster {
   browser: puppeteer.Browser;
   page: puppeteer.Page;
   isConnected = false;
@@ -27,6 +35,10 @@ class Clipboard {
 
     await this.page.waitForNavigation();
     this.isConnected = true;
+  }
+
+  async getClipboardFormat(): Promise<number[]> {
+    throw new Error("Not supported");
   }
 
   async getClipboardTypes(): Promise<string[]> {
@@ -164,7 +176,7 @@ const sleep = (ms: number) => new Promise<void>((res) => setTimeout(res, ms));
 //   await paster.getClipboardFile().then((types) => console.log(types));
 // })();
 
-let paster = new Clipboard();
+let paster = new WebDriverPaster();
 setInterval(async () => {
   await paster.getClipboardFile().then((types) => console.log(types));
 }, 2000);
