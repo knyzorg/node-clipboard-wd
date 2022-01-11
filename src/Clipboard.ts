@@ -8,7 +8,7 @@ interface Paster {
   getClipboardFormat(format: string): Promise<number[]>;
 }
 
-class WebDriverPaster implements Paster {
+export default class WebDriverPaster implements Paster {
   browser: puppeteer.Browser;
   page: puppeteer.Page;
   isConnected = false;
@@ -167,16 +167,16 @@ class WebDriverPaster implements Paster {
   }
 }
 
-const sleep = (ms: number) => new Promise<void>((res) => setTimeout(res, ms));
-// (async function () {
-//   let paster = new WebDriverPaster();
-//   await paster.getClipboardTypes().then((types) => console.log(types));
-//   await paster.getClipboardPlainText().then((types) => console.log(types));
-//   await paster.getClipboardRichText().then((types) => console.log(types));
-//   await paster.getClipboardFile().then((types) => console.log(types));
-// })();
+// const sleep = (ms: number) => new Promise<void>((res) => setTimeout(res, ms));
+// // (async function () {
+// //   let paster = new WebDriverPaster();
+// //   await paster.getClipboardTypes().then((types) => console.log(types));
+// //   await paster.getClipboardPlainText().then((types) => console.log(types));
+// //   await paster.getClipboardRichText().then((types) => console.log(types));
+// //   await paster.getClipboardFile().then((types) => console.log(types));
+// // })();
 
-let paster = new WebDriverPaster();
-setInterval(async () => {
-  await paster.getClipboardFile().then((types) => console.log(types));
-}, 2000);
+// let paster = new WebDriverPaster();
+// setInterval(async () => {
+//   await paster.getClipboardFile().then((types) => console.log(types));
+// }, 2000);

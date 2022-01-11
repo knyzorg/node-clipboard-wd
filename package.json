@@ -5,9 +5,10 @@
   "name": "node-clipboard-wd",
   "version": "0.1.0",
   "description": "Experimental WebDriver-based clipboard access",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "npm run test"
+    "test": "npm run test",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
