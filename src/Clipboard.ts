@@ -123,16 +123,16 @@ export default class WebDriverPaster implements Paster {
 
   async getClipboardFile() {
     await this.ensureBrowserLoaded();
-    let types = this.page
+    let file = this.page
       .evaluate(function () {
         return new Promise<{
           name: string;
           type: string;
           content: number[];
-        }>((resolve) => {
+        }>((resolve, reject) => {
           const handler = async (event: ClipboardEvent) => {
             const files = Array.from(event.clipboardData.files);
-            if (!files.length) return null;
+            if (!files.length) return resolve(null);
             for (let file of files) {
               const reader = (
                 file.stream() as any as ReadableStream<Int8Array>
@@ -146,10 +146,17 @@ export default class WebDriverPaster implements Paster {
               resolve({ name: file.name, type: file.type, content: buffer });
               break;
             }
+
             document
               .querySelector("body")
               .removeEventListener("paste", handler);
           };
+          setTimeout(() => {
+            resolve(null);
+            document
+              .querySelector("body")
+              .removeEventListener("paste", handler);
+          }, 5000);
           document.querySelector("body").addEventListener("paste", handler);
         });
       })
@@ -163,20 +170,14 @@ export default class WebDriverPaster implements Paster {
       return null;
     }
 
-    return types;
+    return file;
+  }
+
+  unload() {
+    return new Promise<void>((res) => {
+      if (!this.browser) return res();
+      this.browser.once("disconnected", res);
+      this.browser.close();
+    });
   }
 }
-
-// const sleep = (ms: number) => new Promise<void>((res) => setTimeout(res, ms));
-// // (async function () {
-// //   let paster = new WebDriverPaster();
-// //   await paster.getClipboardTypes().then((types) => console.log(types));
-// //   await paster.getClipboardPlainText().then((types) => console.log(types));
-// //   await paster.getClipboardRichText().then((types) => console.log(types));
-// //   await paster.getClipboardFile().then((types) => console.log(types));
-// // })();
-
-// let paster = new WebDriverPaster();
-// setInterval(async () => {
-//   await paster.getClipboardFile().then((types) => console.log(types));
-// }, 2000);
