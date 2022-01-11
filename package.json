@@ -3,7 +3,7 @@
     "puppeteer": "^13.0.1"
   },
   "name": "node-clipboard-wd",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Experimental WebDriver-based clipboard access",
   "main": "dist/index.js",
   "scripts": {
